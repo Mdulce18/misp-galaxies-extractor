@@ -2,7 +2,7 @@
 
 import logging
 import json
-logging.basicConfig(level=logging.INFO)
+# logging.basicConfig(level=logging.INFO)
 
 class Actor():  # Actor
     def __init__(self, actor_number):
@@ -18,7 +18,7 @@ class Actor():  # Actor
                 # parse main actor name
                 actor_name = data['values'][self.actor_number]['value']
             except IndexError:
-                logging.error("Actor Index Error")
+                logging.info("Actor Index Error")
                 return None
         except AttributeError:
             logging.error("JSON Parse Error")

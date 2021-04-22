@@ -1,7 +1,7 @@
 # crear lista de actores, dar un nombre y buscarlo en la lista
 import logging
 import requests
-logging.basicConfig(level=logging.INFO)
+# logging.basicConfig(level=logging.INFO)
 
 from actor import Actor
 
@@ -48,11 +48,9 @@ class Actor_Repository():
 
     def get_aliases(self, alias):
         for actor in self.actors_list:
+            # print(actor)
             if alias in actor:
                 return actor
-            else:
-                logging.error('Non-Existing Alias')
-                return None
 
     def get_actors_list(self):
         return self.actors_list
