@@ -12,6 +12,7 @@ class Actor_Repository():
     def __init__(self, misp_json_link):
         self.misp_galaxy_json_link = misp_json_link
         self.actors_list = []
+        self.description_list = []
 
     def parse_json(self):
         try:
@@ -42,15 +43,20 @@ class Actor_Repository():
                     new_actor.get_raw_community_identifiers())
                 final_actor_list = new_actor.get_community_identifiers()
                 self.actors_list.append(final_actor_list)
+                self.description_list.append(new_actor.get_description())
                 actor_counter += 1
 
         return True
 
-    def get_aliases(self, alias):
+    def get_aliases_position(self, alias):
+        actor_position = -1
         for actor in self.actors_list:
-            # print(actor)
+            actor_position += 1
             if alias in actor:
-                return actor
+                return actor_position
 
     def get_actors_list(self):
         return self.actors_list
+
+    def get_description_list(self):
+        return self.description_list

@@ -4,11 +4,13 @@ import logging
 import json
 # logging.basicConfig(level=logging.INFO)
 
+
 class Actor():  # Actor
     def __init__(self, actor_number):
         self.community_identifiers_list = []
         self.actor_number = actor_number
         self.community_identifiers_raw = []
+        self.description = None
 
     def get_community_identifiers_json(self, jsontext):
         # parse json from raw github
@@ -28,9 +30,16 @@ class Actor():  # Actor
             # parse community identifiers
             community_identifiers_raw = data['values'][self.actor_number]['meta']['synonyms']
             community_identifiers_raw.append(actor_name)
+
         except KeyError:
             logging.info(f"Actor {actor_name} without Aliases")
             community_identifiers_raw = [actor_name]
+
+        try:
+            self.description = data['values'][self.actor_number]['description']
+        except KeyError:
+            logging.info(f"Actor {actor_name} without description")
+            self.description = None
 
         self.community_identifiers_raw = community_identifiers_raw
         return True
@@ -57,6 +66,9 @@ class Actor():  # Actor
 
     def get_community_identifiers(self):
         return self.community_identifiers_list
+
+    def get_description(self):
+        return self.description
 
     def get_raw_community_identifiers(self):
         return self.community_identifiers_raw
