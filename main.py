@@ -22,9 +22,12 @@ def search_for_alias(repository, alias_name):
                 aliases_list = repository.get_aliases(alias_format)
                 aliases_formated = convert_list_to_string(aliases_list, ',')
                 actor_description = repository.get_description(alias_format)
+                actor_sources = repository.get_sources(alias_format)
 
                 print(
-                    f'Aliases:\n{aliases_formated}\nDescription:\n{actor_description}')
+                    f'Aliases:\n{aliases_formated}\nDescription:\n{actor_description}\nSources:')
+                for source in actor_sources:
+                    print(source)
 
             else:
                 logging.error('Alias not found')

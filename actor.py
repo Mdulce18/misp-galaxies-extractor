@@ -11,8 +11,9 @@ class Actor():  # Actor
         self.actor_number = actor_number
         self.community_identifiers_raw = []
         self.description = None
+        self.sources = []
 
-    def get_community_identifiers_json(self, jsontext):
+    def get_actor_info_from_json(self, jsontext):
         # parse json from raw github
         try:
             data = json.loads(jsontext.text)
@@ -36,10 +37,17 @@ class Actor():  # Actor
             community_identifiers_raw = [actor_name]
 
         try:
+            # parse description
             self.description = data['values'][self.actor_number]['description']
         except KeyError:
             logging.info(f"Actor {actor_name} without description")
             self.description = None
+
+        try:
+            # parse sources
+            self.sources = data['values'][self.actor_number]['meta']['refs']
+        except KeyError:
+            logging.info(f"Actor {actor_name} without sources")
 
         self.community_identifiers_raw = community_identifiers_raw
         return True
@@ -69,6 +77,9 @@ class Actor():  # Actor
 
     def get_description(self):
         return self.description
+
+    def get_sources(self):
+        return self.sources
 
     def get_raw_community_identifiers(self):
         return self.community_identifiers_raw
