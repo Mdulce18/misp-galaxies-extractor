@@ -19,12 +19,12 @@ def search_for_alias(repository, alias_name):
             aliases_position = repository.get_aliases_position(alias_format)
             # gather the position to search in repository of actor and descriptions
             if aliases_position is not None:
-                aliases_list = repository.get_actors_list()
-                description_list = repository.get_description_list()
-                aliases_formated = convert_list_to_string(
-                    aliases_list[aliases_position], ',')
+                aliases_list = repository.get_aliases(alias_format)
+                aliases_formated = convert_list_to_string(aliases_list, ',')
+                actor_description = repository.get_description(alias_format)
+
                 print(
-                    f'Aliases:\n{aliases_formated}\nDescription:\n{description_list[aliases_position]}')
+                    f'Aliases:\n{aliases_formated}\nDescription:\n{actor_description}')
 
             else:
                 logging.error('Alias not found')
@@ -35,10 +35,7 @@ def search_for_alias(repository, alias_name):
 def main():
     print(intro)
     new_repository = Actor_Repository(link)
-    json_text = new_repository.parse_json()
-    new_repository.create_actors_list(json_text)
-    new_repository.get_actors_list()
-    # print(full_repo)
+    new_repository.create_actors_list()
     alias_name = None
     search_for_alias(new_repository, alias_name)
     print('Exiting...')
